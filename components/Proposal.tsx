@@ -79,7 +79,7 @@ const Proposal: React.FC<{ data: FullProposalData }> = ({ data }) => {
         {Number(data.currentFunding) > 0 && (
           <>
             <span className="underline">Current Funding:</span>{" "}
-            {data.currentFunding} USDT
+            {Number(data.currentFunding) / 10 ** 18} USDT
           </>
         )}
       </h2>

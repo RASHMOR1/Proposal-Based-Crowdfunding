@@ -223,7 +223,7 @@ export default function ProposalPageClient({
             <div className="flex flex-col my-2">
               <h2 className="my-1">Current Funding:</h2>
               <div className="lightViolet w-full border rounded-xl p-2 break-all">
-                {proposalData?.currentFunding} USDT
+                {Number(proposalData?.currentFunding) / 10 ** 18} USDT
               </div>
             </div>
           )}
