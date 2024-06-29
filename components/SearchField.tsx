@@ -1,62 +1,39 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { fetchProposals } from "../app/serverActions";
+//import React, { useState, useEffect } from "react";
+//import { fetchProposals } from "../app/testServerSide";
 import {
   FullProposalData,
   ProposalDataFromMongo,
 } from "@/interfaces/Interfaces";
 import { Proposal } from "@/components";
 
-const SearchField: React.FC = () => {
-  const [quotesArr, setQuotesArr] = useState<ProposalDataFromMongo[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
+interface SearchFieldProps {
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
+}
 
-  async function getQuote() {
-    // try {
-    //   let arr = await fetchProposals(searchTerm);
-    //   setQuotesArr(arr);
-    //   setSearchTerm("");
-    //   console.log("this is what was fetched:", arr);
-    // } catch (error) {
-    //   console.error("Error fetching quotes:", error);
-    // }
-  }
-
-  useEffect(() => {
-    getQuote();
-  }, []);
-
+const SearchField: React.FC<SearchFieldProps> = ({
+  searchTerm,
+  setSearchTerm,
+}) => {
   return (
     <div>
-      <div>
+      <div className="flex justify-center items-center w-full">
         <input
           type="text"
           name="search"
           id="search"
-          className="shadow-xl shadow-slate-500 w-[75%] h-10 p-2 outline-none"
+          className="shadow-xl shadow-slate-200 rounded-2xl w-3/4 mr-2 p-3 outline-none"
           placeholder="Search...."
           onChange={(e) => setSearchTerm(e.target.value)}
           value={searchTerm}
         />
         <button
-          className="p-2 text-white bg-orange-500 hover:cursor-pointer"
-          onClick={getQuote}
+          className="p-3 violet m-0 text-white rounded-2xl  hover:cursor-pointer"
+          onClick={() => setSearchTerm(searchTerm)}
         >
           Search
         </button>
       </div>
-
-      {/* <div className="m-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {quotesArr && quotesArr.length > 0 ? (
-            quotesArr.map((proposal: ProposalDataFromMongo, index: number) => (
-              <Proposal key={index} data={proposal}></Proposal>
-            ))
-          ) : (
-            <p>No results found</p>
-          )}
-        </div>
-      </div> */}
     </div>
   );
 };

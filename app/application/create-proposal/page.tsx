@@ -7,7 +7,10 @@ import "../../globals.css";
 import MainContractAbi from "../../../abiFile.json";
 
 import { TransactionBox, GetBackButton } from "@/components";
-import { createProposalInteraction } from "@/app/blockchainInteractions";
+import {
+  createProposalInteraction,
+  approveMockUsdtInteraction,
+} from "@/app/blockchainInteractions";
 
 import {
   getAccount,
@@ -55,17 +58,18 @@ function CreatePage() {
 
   const approveMockUsdt = async () => {
     setUploadingTransaction(true);
-    const { request: prepareConfig } = await prepareWriteContract({
-      address: mockUsdtAddress, // mock usdt contract
-      abi: MockUsdtAbi,
-      functionName: "approve",
-      args: [mainContractAddress, 10 * 10 ** 18],
-    });
-    const { hash: approveHash } = await writeContract(prepareConfig);
-    const data = await waitForTransaction({
-      hash: approveHash,
-      //timeout: 20_000,
-    });
+    // const { request: prepareConfig } = await prepareWriteContract({
+    //   address: mockUsdtAddress, // mock usdt contract
+    //   abi: MockUsdtAbi,
+    //   functionName: "approve",
+    //   args: [mainContractAddress, 10 * 10 ** 18],
+    // });
+    // const { hash: approveHash } = await writeContract(prepareConfig);
+    // const data = await waitForTransaction({
+    //   hash: approveHash,
+    //   //timeout: 20_000,
+    // });
+    const data = await approveMockUsdtInteraction(10);
     setIsAllowanceEnough(true);
     setUploadingTransaction(false);
 
@@ -75,21 +79,21 @@ function CreatePage() {
   const createProposalMainContract = async () => {
     setUploadingTransaction(true);
 
-    //const data = await createProposalInteraction(ipfsHash, form.address);
+    const data = await createProposalInteraction(ipfsHash, form.address);
 
-    const { request: prepareConfig } = await prepareWriteContract({
-      address: mainContractAddress,
-      abi: MainContractAbi,
-      args: [form.address, ipfsHash],
-      functionName: "createProposal",
-    });
-    const { hash } = await writeContract(prepareConfig);
+    // const { request: prepareConfig } = await prepareWriteContract({
+    //   address: mainContractAddress,
+    //   abi: MainContractAbi,
+    //   args: [form.address, ipfsHash],
+    //   functionName: "createProposal",
+    // });
+    // const { hash } = await writeContract(prepareConfig);
 
-    const data = await waitForTransaction({
-      confirmations: 1,
-      hash,
-      timeout: 120_000,
-    });
+    // const data = await waitForTransaction({
+    //   confirmations: 1,
+    //   hash,
+    //   timeout: 120_000,
+    // });
     setIsAllowanceEnough(false);
     setUploadingTransaction(false);
     setTransactionHash(String(data?.transactionHash));
@@ -101,7 +105,11 @@ function CreatePage() {
   };
 
   useEffect(() => {
-    getAllowanceAmount();
+    const fetchAllowanceAmount = async () => {
+      await getAllowanceAmount();
+    };
+
+    fetchAllowanceAmount();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

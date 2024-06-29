@@ -7,5 +7,5 @@ export const decisionText: Record<number, string> = {
 };
 
 export const mockUsdtAddress = "0xc00d792Ae11F44090Cb285be227756e3D6e71692";
-export const mainContractAddress = "0x3BDBbB860C39593c13F23292241F9E0252FdBF58";
+export const mainContractAddress = "0x93b5cE7E81598FE86FDaB141a6A34E7aD9c32e77";
 export const mockusdtDecimals = 18;

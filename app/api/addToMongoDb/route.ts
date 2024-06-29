@@ -68,6 +68,19 @@ export async function POST(req: Request, res: Response) {
             newFundingGoal: Number(proposal.args.fundingGoal),
             newDeadline: Number(proposal.args.deadline),
           });
+        } else if (
+          proposal.eventName == "MainContract__CompanyExecutingProposal"
+        ) {
+          await updateProposal({
+            proposalId: Number(proposal.args.proposalId),
+            newCurrentFunding: String(proposal.args.currentFunding),
+            newDecisionStatus: Number(proposal.args.decisionStatus),
+          });
+        } else if (proposal.eventName == "MainContract__ProposalFunded") {
+          await updateProposal({
+            proposalId: Number(proposal.args.proposalId),
+            additionalFunding: Number(proposal.args.fundingAmount),
+          });
         }
       }
 

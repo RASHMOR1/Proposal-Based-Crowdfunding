@@ -1,16 +1,15 @@
 import React from "react";
-import { ProposalDataFromMongo } from "@/interfaces/Interfaces";
+import {
+  ProposalDataFromMongo,
+  FullProposalData,
+} from "@/interfaces/Interfaces";
 
 import "../app/globals.css";
-import { readIpfs, parseData } from "../app/serverActions";
+import { parseData } from "../app/serverActions";
 import Link from "next/link";
 import { decisionText } from "../constants/constants";
 
-const Proposal: React.FC<{ data: ProposalDataFromMongo }> = async ({
-  data,
-}) => {
-  const proposalData = await readIpfs(data.proposalURI);
-
+const Proposal: React.FC<{ data: FullProposalData }> = ({ data }) => {
   function modifyHash(hash: string) {
     return hash.slice(0, 5) + "..." + hash.slice(-5);
   }
@@ -65,7 +64,7 @@ const Proposal: React.FC<{ data: ProposalDataFromMongo }> = async ({
 
       <h2>
         <span className="underline">Proposal title</span>:{" "}
-        {modifyTitle(proposalData.title)}{" "}
+        {modifyTitle(data?.ipfsData?.title as string)}{" "}
       </h2>
       <h2>
         {Number(data.fundingGoal) > 0 && (
@@ -77,27 +76,20 @@ const Proposal: React.FC<{ data: ProposalDataFromMongo }> = async ({
       </h2>
 
       <h2>
-        {
-          Number(data.currentFunding) > 0 && (
-            <>
-              <span className="underline">Current Funding:</span>{" "}
-              {data.currentFunding} USDT
-            </>
-          )
-          //`Current funding: ${data.currentFunding}`
-        }
+        {Number(data.currentFunding) > 0 && (
+          <>
+            <span className="underline">Current Funding:</span>{" "}
+            {data.currentFunding} USDT
+          </>
+        )}
       </h2>
       <h2>
-        {
-          Number(data.deadline) > 0 && (
-            <>
-              <span className="underline">Deadline:</span>{" "}
-              {parseData(Number(data?.deadline))}
-            </>
-          )
-
-          //`Deadline: ${parseData(Number(data?.deadline))}`
-        }
+        {Number(data.deadline) > 0 && (
+          <>
+            <span className="underline">Deadline:</span>{" "}
+            {parseData(Number(data?.deadline))}
+          </>
+        )}
       </h2>
       <div className="flex justify-around m-2">
         <Link href={`/application/proposals/${data.proposalId}`}>

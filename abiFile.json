@@ -102,11 +102,17 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "amountWithdrawn",
+        "name": "currentFunding",
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
+        "internalType": "enum MainContract.Decision",
+        "name": "decisionStatus",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "timeStamp",
         "type": "uint256"

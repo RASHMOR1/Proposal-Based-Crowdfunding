@@ -1,4 +1,3 @@
-//"use server";
 import moment from "moment";
 import connectDB from "./mongodb/connectToDB";
 import ProposalModel from "./mongodb/proposalSchema";
@@ -66,8 +65,17 @@ export const fetchAllProposals = async () => {
 
   try {
     const returnData = await ProposalModel.find({});
+    const proposalsWithIpfsData = await Promise.all(
+      returnData.map(async (data) => {
+        const ipfsData = await readIpfs(data.proposalURI);
+        return {
+          ...data.toObject(), // Convert Mongoose document to plain JavaScript object
+          ipfsData, // Attach the IPFS data
+        };
+      })
+    );
     console.log("this is returnData in GET", returnData);
-    return returnData;
+    return proposalsWithIpfsData;
   } catch (error) {
     console.error("Error fetching proposals:", error);
     throw new Error("Failed to fetch proposals");
@@ -95,7 +103,10 @@ interface UpdateProposalData {
   newDecisionStatus?: number; // Optional field
   newFundingGoal?: number; // Optional field
   newDeadline?: number;
-  newComment?: string; // Optional field
+  newComment?: string;
+  newCurrentFunding?: string;
+  additionalFunding?: number;
+  // Optional field
 }
 
 export async function updateProposal(data: UpdateProposalData) {
@@ -108,6 +119,24 @@ export async function updateProposal(data: UpdateProposalData) {
     if (data.newDecisionStatus !== undefined)
       updateFields.decisionStatus = data.newDecisionStatus;
     if (data.newComment !== undefined) updateFields.comment = data.newComment;
+
+    if (data.additionalFunding !== undefined) {
+      // Fetch the current proposal from the database
+      const currentProposal = await ProposalModel.findOne({
+        proposalId: data.proposalId,
+      });
+      if (!currentProposal) {
+        console.log("Proposal not found.");
+        return null;
+      }
+
+      // Calculate new current funding
+      const currentFunding = Number(currentProposal.currentFunding || 0);
+      const newCurrentFunding = currentFunding + data.additionalFunding;
+      updateFields.currentFunding = newCurrentFunding;
+    } else if (data.newCurrentFunding !== undefined) {
+      updateFields.currentFunding = data.newCurrentFunding;
+    }
 
     const result = await ProposalModel.findOneAndUpdate(
       { proposalId: data.proposalId },
@@ -134,6 +163,7 @@ export async function updateProposal(data: UpdateProposalData) {
 }
 
 export async function fetchProposals(str: string) {
+  await connectDB();
   let searchTerm = `${str}`;
 
   const convertToLowerCase = (text: string) => {

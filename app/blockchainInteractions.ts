@@ -25,7 +25,9 @@ export const approveMockUsdtInteraction = async (amount: number) => {
   });
   const { hash: approveHash } = await writeContract(prepareConfig);
   const data = await waitForTransaction({
+    confirmations: 1,
     hash: approveHash,
+    timeout: 120_000,
   });
 
   console.log("this is the data from wait for the transaction", data);
@@ -44,7 +46,9 @@ export const createProposalInteraction = async (
   const { hash } = await writeContract(prepareConfig);
 
   const data = await waitForTransaction({
+    confirmations: 1,
     hash,
+    timeout: 120_000,
   });
   return data;
 };
@@ -91,6 +95,49 @@ export const companyMakeDecisionInteraction = async (
     abi: MainContractAbi,
     args: [proposalId, decision, fundingGoal, deadline],
     functionName: "companyMakeDecision",
+  });
+  const { hash } = await writeContract(makeDecisionConfig);
+
+  const data = await waitForTransaction({
+    hash,
+  });
+  return data;
+};
+
+export const refundInteraction = async (proposalId: number) => {
+  const { request: makeDecisionConfig } = await prepareWriteContract({
+    address: mainContractAddress,
+    abi: MainContractAbi,
+    args: [proposalId],
+    functionName: "refundOutdatedProposal",
+  });
+  const { hash } = await writeContract(makeDecisionConfig);
+
+  const data = await waitForTransaction({
+    hash,
+  });
+  return data;
+};
+export const cleanInteraction = async (proposalId: number) => {
+  const { request: makeDecisionConfig } = await prepareWriteContract({
+    address: mainContractAddress,
+    abi: MainContractAbi,
+    args: [proposalId],
+    functionName: "cleanOutdatedProposals",
+  });
+  const { hash } = await writeContract(makeDecisionConfig);
+
+  const data = await waitForTransaction({
+    hash,
+  });
+  return data;
+};
+export const executionInteraction = async (proposalId: number) => {
+  const { request: makeDecisionConfig } = await prepareWriteContract({
+    address: mainContractAddress,
+    abi: MainContractAbi,
+    args: [proposalId],
+    functionName: "companyExecutingProposal",
   });
   const { hash } = await writeContract(makeDecisionConfig);
 

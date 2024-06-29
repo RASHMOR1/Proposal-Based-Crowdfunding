@@ -77,5 +77,6 @@ export interface TopicInterface {
     currentFunding: bigint;
     deadline: bigint;
     comment: string;
+    fundingAmount?: bigint;
   };
 }
