@@ -1,4 +1,4 @@
-import MainContractAbi from "./../abiFile.json";
+import MainContractAbi from "@/abi/abiFile.json";
 import GetBackButton from "@/components/GetBackButton";
 
 import {
@@ -14,7 +14,7 @@ import {
   mockusdtDecimals,
 } from "@/constants/constants";
 
-import MockUsdtAbi from "./../MockUsdtAbi.json";
+import MockUsdtAbi from "@/abi/MockUsdtAbi.json";
 
 export const approveMockUsdtInteraction = async (amount: number) => {
   const { request: prepareConfig } = await prepareWriteContract({

@@ -5,8 +5,7 @@ import { wagmiConfig } from "./wagmiConfig";
 
 import {
   RainbowKitProvider,
-  getDefaultWallets,
-  connectorsForWallets,
+
 } from "@rainbow-me/rainbowkit";
 
 import { configureChains, createConfig, WagmiConfig } from "wagmi";

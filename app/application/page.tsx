@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Proposal, SearchField } from "../../components/";
-import { fetchAllProposals } from "../serverActions";
+
 import {
-  ProposalDataFromMongo,
+
   FullProposalData,
 } from "@/interfaces/Interfaces";
 import Link from "next/link";

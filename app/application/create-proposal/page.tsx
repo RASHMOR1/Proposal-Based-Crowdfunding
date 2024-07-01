@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import "../../globals.css";
 
-import MainContractAbi from "../../../abiFile.json";
+import MainContractAbi from "@/abi/abiFile.json";
 
 import { TransactionBox, GetBackButton } from "@/components";
 import {
@@ -21,7 +21,7 @@ import {
 } from "@wagmi/core";
 import { mainContractAddress, mockUsdtAddress } from "@/constants/constants";
 
-import MockUsdtAbi from "../../../MockUsdtAbi.json";
+import MockUsdtAbi from "@/abi/MockUsdtAbi.json";
 
 function CreatePage() {
   const [isCreateButtonClicked, setCreateButtonClicked] = useState(true);

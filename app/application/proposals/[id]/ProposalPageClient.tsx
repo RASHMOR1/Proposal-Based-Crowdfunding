@@ -18,7 +18,7 @@ import {
 } from "@wagmi/core";
 // import GetBackButton from "@/components/GetBackButton";
 
-import MainContractAbi from "../../../../abiFile.json";
+import MainContractAbi from "@/abi/abiFile.json";
 
 import { dateToUnix, parseData } from "@/app/serverActions";
 
@@ -32,6 +32,7 @@ import {
 } from "../../../blockchainInteractions";
 
 import { ModalDeny, ModalAccept } from "@/components";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
   ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -250,14 +251,9 @@ export default function ProposalPageClient({
             </div>
           </div>
         )}
-        {/* {proposalData?.comment?.length && (
-          <div className="flex flex-col my-2">
-            <h2 className="my-1">Company response:</h2>
-            <div className="lightViolet w-full border rounded-xl p-2">
-              {proposalData?.comment}
-            </div>
-          </div>
-        )} */}
+
+
+        
         <div className="flex justify-around flex-col sm:flex-row">
           {proposalData?.decisionStatus == 1 && (
             <div className="flex justify-between items-center mt-4 border border-2 border-violet-500 p-2 rounded-2xl">
@@ -332,6 +328,7 @@ export default function ProposalPageClient({
           )}
         </div>
       </div>
+      
       {proposalData?.decisionStatus == 0 && (
         <div className="w-11/12 min-w-96 sm:w-9/10 md:w-4/5 lg:w-4/5 max-w-7xl">
           {userAddress == proposalData?.toCompanyAddress && (
