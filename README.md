@@ -24,3 +24,7 @@ MONGODB_URI=your-mongodb-uri
 ```
 
 Replace your-mongodb-uri with the actual URI of your MongoDB instance.
+
+## Smart contract repository
+
+You can access the smart contract repository via the following link: [Smart-Contracts-Proposal-Based-CrowdFunding.](https://github.com/RASHMOR1/Smart-Contracts-Proposal-Based-CrowdFunding)
