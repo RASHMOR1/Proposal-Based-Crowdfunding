@@ -16,15 +16,18 @@ const ModalDeny: React.FC<ModalDenyProps> = ({
 }) => {
   const [transactionHash, setTransactionHash] = useState("");
   const [comment, setComment] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSendTransaction = async () => {
     console.log("this is proposal id :", proposalId);
+    setIsLoading(true);
     const data = await companyMakeDecisionInteraction(
       proposalId,
       2 as number,
       Number(0),
       Number(0)
     );
+    setIsLoading(false);
     setTransactionHash(data?.transactionHash);
     console.log("this is comment", comment);
     try {
@@ -64,12 +67,36 @@ const ModalDeny: React.FC<ModalDenyProps> = ({
       <div
         className={`flex flex-row ${transactionHash ? "justify-start" : "justify-start"} items-center mt-2`}
       >
-        <button
+        {/* <button
           className={`whitespace-nowrap mr-4 p-3  m-0 rounded-lg  text-white ${proposalDecisionMade ? "lightViolet" : "cursor-pointer violet transition duration-150 ease-in-out transform active:scale-90"} `}
           onClick={handleSendTransaction}
           disabled={proposalDecisionMade}
         >
           Send Transaction
+        </button> */}
+        <button
+          className={`whitespace-nowrap mr-4 p-3 m-0 rounded-lg text-white ${proposalDecisionMade ? "lightViolet" : "cursor-pointer violet transition duration-150 ease-in-out transform active:scale-90"}`}
+          onClick={handleSendTransaction}
+          disabled={proposalDecisionMade || isLoading}
+        >
+          {isLoading ? (
+            <div className="flex items-center ">
+              <div className="spinner mr-2"></div>
+              Loading...
+            </div>
+          ) : proposalDecisionMade ? (
+            "Done"
+          ) : (
+            "Send Transaction"
+          )}
+          {/* {proposalDecisionMade ? (
+            <div className="flex items-center">
+              <div className="spinner mr-2"></div>
+              Loading...
+            </div>
+          ) : (
+            "Send Transaction"
+          )} */}
         </button>
         {transactionHash && (
           <div className=" text-sm text-slate-800">

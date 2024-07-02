@@ -55,33 +55,6 @@ export const getData = async (id: number): Promise<FullProposalData> => {
   }
 };
 
-export const fetchAllProposals = async () => {
-  const baseUrl = process.env.NEXT_BASE_URL;
-  if (!baseUrl) {
-    throw new Error("NEXT_BASE_URL is not defined");
-  }
-
-  await connectDB();
-
-  try {
-    const returnData = await ProposalModel.find({});
-    const proposalsWithIpfsData = await Promise.all(
-      returnData.map(async (data) => {
-        const ipfsData = await readIpfs(data.proposalURI);
-        return {
-          ...data.toObject(), // Convert Mongoose document to plain JavaScript object
-          ipfsData, // Attach the IPFS data
-        };
-      })
-    );
-    console.log("this is returnData in GET", returnData);
-    return proposalsWithIpfsData;
-  } catch (error) {
-    console.error("Error fetching proposals:", error);
-    throw new Error("Failed to fetch proposals");
-  }
-};
-
 export const parseData = (timestamp: number) => {
   let parsed = moment.unix(timestamp).utc();
   return parsed.format("YYYY-MM-DD HH:mm [UTC]Z"); // Custom format in UTC

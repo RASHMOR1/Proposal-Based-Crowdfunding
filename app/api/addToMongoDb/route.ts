@@ -1,6 +1,6 @@
 import connectDB from "../../mongodb/connectToDB";
 import ProposalModel from "../../mongodb/proposalSchema";
-import MainContractAbi from "../../../abiFile.json";
+import MainContractAbi from "@/abi/abiFile.json";
 import { decodeEventLog } from "viem";
 import {
   FullProposalData,

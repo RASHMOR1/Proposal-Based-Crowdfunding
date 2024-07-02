@@ -1,8 +1,6 @@
 import MainContractAbi from "@/abi/abiFile.json";
-import GetBackButton from "@/components/GetBackButton";
 
 import {
-  getAccount,
   readContract,
   waitForTransaction,
   prepareWriteContract,
@@ -12,9 +10,11 @@ import {
   mainContractAddress,
   mockUsdtAddress,
   mockusdtDecimals,
+  faucetAddress,
 } from "@/constants/constants";
 
 import MockUsdtAbi from "@/abi/MockUsdtAbi.json";
+import FaucetAbi from "@/abi/FaucetAbi.json";
 
 export const approveMockUsdtInteraction = async (amount: number) => {
   const { request: prepareConfig } = await prepareWriteContract({
@@ -140,6 +140,20 @@ export const executionInteraction = async (proposalId: number) => {
     functionName: "companyExecutingProposal",
   });
   const { hash } = await writeContract(makeDecisionConfig);
+
+  const data = await waitForTransaction({
+    hash,
+  });
+  return data;
+};
+export const faucetMintInteraction = async () => {
+  const { request: mintConfig } = await prepareWriteContract({
+    address: faucetAddress,
+    abi: FaucetAbi,
+    args: [],
+    functionName: "mint",
+  });
+  const { hash } = await writeContract(mintConfig);
 
   const data = await waitForTransaction({
     hash,

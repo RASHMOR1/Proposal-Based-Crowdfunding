@@ -17,13 +17,19 @@ This project uses Moralis Streams for real-time blockchain data processing. To r
 
 ## Environment Variables
 
-To connect to your MongoDB database, you need to populate the .env file with the MongoDB URI. Create a .env file in the root of your project and add the following line:
+Create a .env file in the root of your project and add the following lines:
 
 ```
 MONGODB_URI=your-mongodb-uri
+NEXT_PUBLIC_PROJECT_ID=your-wallet-connect-project-id
+NEXT_PUBLIC_SEPOLIA_RPC_URL=your-sepolia-rpc-url
 ```
 
-Replace your-mongodb-uri with the actual URI of your MongoDB instance.
+MONGODB_URI: Replace your-mongodb-uri with the actual URI of your MongoDB instance. This URI is used to connect your application to your MongoDB database.
+
+NEXT_PUBLIC_PROJECT_ID: Replace your-wallet-connect-project-id with the actual project ID from your WalletConnect . This ID is used to integrate WalletConnect in your application, allowing users to connect their wallets securely. [Get your project Id](https://cloud.walletconnect.com/sign-in)
+
+NEXT_PUBLIC_SEPOLIA_RPC_URL: Replace your-sepolia-rpc-url with the actual RPC URL for the Sepolia network. This URL is used to connect to the
 
 ## Smart contract repository
 

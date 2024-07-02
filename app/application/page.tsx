@@ -1,16 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Proposal, SearchField } from "../../components/";
-
-import {
-
-  FullProposalData,
-} from "@/interfaces/Interfaces";
+import { useAccount } from "wagmi";
+import { FullProposalData } from "@/interfaces/Interfaces";
 import Link from "next/link";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 const CACHE_DURATION = 1 * 60 * 1000; // 3 minutes
 
 const App: React.FC = () => {
+  const { isConnected } = useAccount();
   const [allProposals, setAllProposals] = useState<FullProposalData[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,6 +17,7 @@ const App: React.FC = () => {
   const [totalProposals, setTotalProposals] = useState(0);
   const proposalsPerPage = 12;
   const totalPages = Math.ceil(totalProposals / proposalsPerPage);
+  const { openConnectModal } = useConnectModal();
 
   const getProposals = async (page: number) => {
     try {
@@ -79,6 +79,12 @@ const App: React.FC = () => {
   useEffect(() => {
     getProposals(currentPage);
   }, [searchTerm, currentPage]);
+
+  useEffect(() => {
+    if (!isConnected && openConnectModal) {
+      openConnectModal();
+    }
+  }, [isConnected, openConnectModal]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
