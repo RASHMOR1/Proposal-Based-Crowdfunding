@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  ProposalDataFromMongo,
-  FullProposalData,
-} from "@/interfaces/Interfaces";
-
+import { FullProposalData } from "@/interfaces/Interfaces";
+import { mockusdtDecimals } from "../constants/constants";
 import "../app/globals.css";
 import { parseData } from "../app/serverActions";
 import Link from "next/link";
@@ -79,7 +76,7 @@ const Proposal: React.FC<{ data: FullProposalData }> = ({ data }) => {
         {Number(data.currentFunding) > 0 && (
           <>
             <span className="underline">Current Funding:</span>{" "}
-            {Number(data.currentFunding) / 10 ** 18} USDT
+            {Number(data.currentFunding) / 10 ** mockusdtDecimals} USDT
           </>
         )}
       </h2>
