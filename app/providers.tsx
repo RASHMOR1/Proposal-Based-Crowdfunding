@@ -3,15 +3,12 @@
 import * as React from "react";
 import { wagmiConfig } from "./wagmiConfig";
 
-import {
-  RainbowKitProvider,
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
-} from "@rainbow-me/rainbowkit";
-
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { WagmiConfig } from "wagmi";
 
 const demoAppInfo = {
-  appName: "Rainbowkit Demo",
+  appName: "Proposal Based Crowdfunding Platfrom",
 };
 
 export function Providers({ children }: { children: React.ReactNode }) {
