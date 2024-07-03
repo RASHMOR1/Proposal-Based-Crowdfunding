@@ -4,7 +4,6 @@ import {
   ledgerWallet,
   metaMaskWallet,
   rainbowWallet,
-  injectedWallet,
   zerionWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig } from "wagmi";
@@ -29,15 +28,13 @@ const connectors = connectorsForWallets([
     groupName: "Popular",
     wallets: [
       metaMaskWallet({ chains, projectId }),
-      //rainbowWallet({ chains, projectId }),
-      //zerionWallet({ chains, projectId }),
+      rainbowWallet({ chains, projectId }),
+      zerionWallet({ chains, projectId }),
     ],
   },
   {
     groupName: "Others",
     wallets: [
-      rainbowWallet({ chains, projectId }),
-      zerionWallet({ chains, projectId }),
       trustWallet({ chains, projectId }),
       ledgerWallet({ chains, projectId }),
     ],
