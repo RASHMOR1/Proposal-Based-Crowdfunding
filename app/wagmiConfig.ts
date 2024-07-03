@@ -30,15 +30,15 @@ const connectors = connectorsForWallets([
     wallets: [
       metaMaskWallet({ chains, projectId }),
       rainbowWallet({ chains, projectId }),
-      // injectedWallet({ chains }),
-      zerionWallet({ chains, projectId }),
+
+      //zerionWallet({ chains, projectId }),
     ],
   },
   {
     groupName: "Others",
     wallets: [
       trustWallet({ chains, projectId }),
-      // ledgerWallet({ chains, projectId }),
+      ledgerWallet({ chains, projectId }),
     ],
   },
 ]);
