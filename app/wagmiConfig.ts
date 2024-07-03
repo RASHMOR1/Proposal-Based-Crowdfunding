@@ -6,6 +6,9 @@ import {
 import { trustWallet, ledgerWallet } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig } from "wagmi";
 import { sepolia } from "wagmi/chains";
+import { MetaMaskConnector } from "@wagmi/core/connectors/metaMask";
+import { InjectedConnector } from "@wagmi/core";
+import { CoinbaseWalletConnector } from "@wagmi/core/connectors/coinbaseWallet";
 
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 
@@ -32,20 +35,35 @@ const demoAppInfo = {
   appName: "Rainbowkit Demo",
 };
 
-const connectors = connectorsForWallets([
-  ...wallets,
-  {
-    groupName: "Other",
-    wallets: [
-      trustWallet({ projectId, chains }),
-      ledgerWallet({ projectId, chains }),
-    ],
-  },
-]);
+// const connectors = connectorsForWallets([
+//   ...wallets,
+//   {
+//     groupName: "Other",
+//     wallets: [
+//       trustWallet({ projectId, chains }),
+//       ledgerWallet({ projectId, chains }),
+//     ],
+//   },
+// ]);
 
 export const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors,
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        appName: "wagmi",
+      },
+    }),
+    new InjectedConnector({
+      chains,
+      options: {
+        name: "Injected",
+        shimDisconnect: true,
+      },
+    }),
+  ],
   publicClient,
   // webSocketPublicClient,
 });
