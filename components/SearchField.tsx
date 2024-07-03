@@ -1,10 +1,4 @@
-//import React, { useState, useEffect } from "react";
-//import { fetchProposals } from "../app/testServerSide";
-import {
-  FullProposalData,
-  ProposalDataFromMongo,
-} from "@/interfaces/Interfaces";
-import { Proposal } from "@/components";
+import React from "react";
 
 interface SearchFieldProps {
   searchTerm: string;

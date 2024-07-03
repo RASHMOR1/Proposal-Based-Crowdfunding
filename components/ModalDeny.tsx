@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { companyMakeDecisionInteraction } from "@/app/blockchainInteractions";
 import TransactionBox from "@/components/TransactionBox";
 
@@ -67,13 +67,6 @@ const ModalDeny: React.FC<ModalDenyProps> = ({
       <div
         className={`flex flex-row ${transactionHash ? "justify-start" : "justify-start"} items-center mt-2`}
       >
-        {/* <button
-          className={`whitespace-nowrap mr-4 p-3  m-0 rounded-lg  text-white ${proposalDecisionMade ? "lightViolet" : "cursor-pointer violet transition duration-150 ease-in-out transform active:scale-90"} `}
-          onClick={handleSendTransaction}
-          disabled={proposalDecisionMade}
-        >
-          Send Transaction
-        </button> */}
         <button
           className={`whitespace-nowrap mr-4 p-3 m-0 rounded-lg text-white ${proposalDecisionMade ? "lightViolet" : "cursor-pointer violet transition duration-150 ease-in-out transform active:scale-90"}`}
           onClick={handleSendTransaction}
@@ -89,14 +82,6 @@ const ModalDeny: React.FC<ModalDenyProps> = ({
           ) : (
             "Send Transaction"
           )}
-          {/* {proposalDecisionMade ? (
-            <div className="flex items-center">
-              <div className="spinner mr-2"></div>
-              Loading...
-            </div>
-          ) : (
-            "Send Transaction"
-          )} */}
         </button>
         {transactionHash && (
           <div className=" text-sm text-slate-800">

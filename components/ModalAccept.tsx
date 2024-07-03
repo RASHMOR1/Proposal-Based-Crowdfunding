@@ -113,14 +113,6 @@ const ModalAccept: React.FC<ModalAcceptProps> = ({
           ) : (
             "Send Transaction"
           )}
-          {/* {proposalDecisionMade ? (
-            <div className="flex items-center">
-              <div className="spinner mr-2"></div>
-              Loading...
-            </div>
-          ) : (
-            "Send Transaction"
-          )} */}
         </button>
         {transactionHash && (
           <div className=" text-sm text-slate-800">
