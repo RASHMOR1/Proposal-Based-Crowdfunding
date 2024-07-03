@@ -10,7 +10,6 @@ export interface ProposalData {
   comment: string;
 }
 export interface ProposalDataFromMongo {
-  //_id: ObjectId; // Using ObjectId to match MongoDB's ObjectId type
   _id: string;
   proposalId: number;
   toCompanyAddress: string;
@@ -21,13 +20,9 @@ export interface ProposalDataFromMongo {
   currentFunding: string;
   deadline: string;
   comment?: string;
-  // __v: number;
-  // createdAt: Date; // Using Date type for timestamps
-  // updatedAt: Date; // Using Date type for timestamps
 }
 
 export interface ProposalDataFromMongoSchema {
-  //_id: ObjectId;
   _id: string;
   proposalId: number;
   toCompanyAddress: string;
