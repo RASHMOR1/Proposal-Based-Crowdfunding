@@ -2,6 +2,10 @@
 
 This project is a blockchain-based crowdfunding platform with a unique twist. Unlike traditional crowdfunding where companies propose projects and seek funding from users, here, regular users make proposals to companies. If a company agrees to execute the proposal and sets a funding goal, the crowdfunding process automatically starts.
 
+Creating a proposal costs 10 mock USDT tokens, and users can earn 0.1 mock USDT tokens by removing outdated proposals.
+
+Visit app on https://proposal-based-crowdfunding.vercel.app/
+
 ## Setting Up Moralis Streams
 
 This project uses Moralis Streams for real-time blockchain data processing. To recreate the setup, you need to create a stream on Moralis that links to the api/addToMongoDb endpoint.

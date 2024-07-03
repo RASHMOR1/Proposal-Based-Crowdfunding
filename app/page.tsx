@@ -22,6 +22,10 @@ export default function Home() {
             proposal and sets a funding goal, the crowdfunding process
             automatically starts.
           </p>
+          <p className="text-lg mb-6 text-gray-700">
+            Creating a proposal costs 10 mock USDT tokens, and users can earn
+            0.1 mock USDT tokens by removing outdated proposals.
+          </p>
 
           <Link href="/application">
             <button className="p-3 violet m-0 w-fit rounded-lg cursor-pointer text-white transition duration-150 ease-in-out transform active:scale-90">
