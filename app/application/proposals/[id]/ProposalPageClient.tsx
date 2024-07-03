@@ -3,25 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import { FullProposalData } from "../../../../interfaces/Interfaces";
 import "../../../globals.css";
-import {
-  decisionText,
-  mockUsdtAddress,
-  mainContractAddress,
-} from "@/constants/constants";
+import { decisionText, mainContractAddress } from "@/constants/constants";
 import { GetBackButton, TransactionBox } from "@/components";
-import {
-  getAccount,
-  readContract,
-  waitForTransaction,
-  prepareWriteContract,
-  writeContract,
-} from "@wagmi/core";
-// import GetBackButton from "@/components/GetBackButton";
-
+import { getAccount, readContract } from "@wagmi/core";
 import MainContractAbi from "@/abi/abiFile.json";
-
 import { dateToUnix, parseData } from "@/app/serverActions";
-
 import {
   getAllowanceInteraction,
   fundProposalInteraction,
@@ -32,7 +18,6 @@ import {
 } from "../../../blockchainInteractions";
 
 import { ModalDeny, ModalAccept } from "@/components";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
   ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -43,14 +28,11 @@ export default function ProposalPageClient({
   proposalData: FullProposalData;
 }) {
   const [fundingAmount, setFundingAmount] = useState("5");
-  //const [data, setData] = useState<FullProposalData | null>(proposalData);
   const [isAllowanceEnough, setIsAllowanceEnough] = useState(false);
   const [transactionHash, setTransactionHash] = useState("");
   const [openModalAccept, setOpenModalAccept] = useState(false);
   const [openModalDeny, setOpenModalDeny] = useState(false);
-  // const [deadlineDate, setDeadlineDate] = useState<Date | null>(null);
   const [proposalDecisionMade, setProposalDecisionMade] = useState(false);
-
   const [refundAmount, setRefundAmount] = useState(0);
   const account = getAccount();
   const userAddress = account.address;
@@ -94,7 +76,7 @@ export default function ProposalPageClient({
 
   const getRefundAmount = async () => {
     const data = await readContract({
-      address: mainContractAddress, // mock usdt contract
+      address: mainContractAddress,
       abi: MainContractAbi,
       functionName: "returnAmountFundedOfTheAddress",
       args: [proposalData.proposalId, userAddress],
@@ -154,7 +136,7 @@ export default function ProposalPageClient({
 
     if (todayUnix === undefined) {
       console.error("Error: todayUnix is undefined");
-      return false; // or handle the error case as needed
+      return false;
     }
 
     return todayUnix > Number(proposalData.deadline);
