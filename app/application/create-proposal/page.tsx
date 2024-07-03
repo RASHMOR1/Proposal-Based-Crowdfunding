@@ -147,7 +147,7 @@ function CreatePage() {
             onChange={(e) => setForm({ ...form, proposal: e.target.value })}
           ></textarea>
         </div>
-        {/* this is the add to ipfs button */}
+
         <div className="flex justify-evenly">
           <div className="flex">
             <h1 className="self-center mx-2">1</h1>
@@ -155,14 +155,11 @@ function CreatePage() {
               className={`p-3 violet w-fit rounded-lg cursor-pointer text-white ${disabledCreateProposal ? "opacity-30" : ""}`}
               type="submit"
               disabled={disabledCreateProposal}
-              // onClick={handleSubmit}
             >
               {!uploadingIpfs ? "Upload proposal to ipfs" : "Uploading..."}
-              {/* Upload proposal to Ipfs */}
             </button>
           </div>
 
-          {/* this is approve button */}
           <div className="flex justify-between content-center">
             <h1 className="self-center mx-2">2</h1>
             {!isAllowanceEnough ? (
@@ -179,7 +176,6 @@ function CreatePage() {
                   : uploadingTransaction
                     ? "Loading..."
                     : "Approve"}
-                {/* {uploadingTransaction ? "Loading..." : "Approve"} */}
               </button>
             ) : (
               <div>
@@ -197,10 +193,6 @@ function CreatePage() {
                       ? "Done"
                       : "Send the transaction"}
                 </button>
-                {/* <h3>
-                  {transactionHash &&
-                    `this is transaction hash:${transactionHash}`}
-                </h3> */}
               </div>
             )}
           </div>
