@@ -58,6 +58,35 @@ export default function ProposalPageClient({
 
   const acceptRef = useRef<HTMLDivElement>(null);
   const denyRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const fetchAllowanceAmount = async () => {
+      await getAllowanceAmount();
+    };
+
+    fetchAllowanceAmount();
+  }, [fundingAmount]);
+
+  useEffect(() => {
+    if (openModalAccept) {
+      scrollToSection(acceptRef);
+    }
+  }, [openModalAccept]);
+  useEffect(() => {
+    if (openModalDeny) {
+      scrollToSection(acceptRef);
+    }
+  }, [openModalDeny]);
+  useEffect(() => {
+    console.log("proposalDecisionMade:", proposalDecisionMade);
+  }, [proposalDecisionMade]);
+
+  useEffect(() => {
+    const fetchRefundAmount = async () => {
+      await getRefundAmount();
+    };
+
+    fetchRefundAmount();
+  }, []);
 
   if (!data) {
     return <div>Error loading proposal data.</div>;
@@ -131,35 +160,6 @@ export default function ProposalPageClient({
     return todayUnix > Number(proposalData.deadline);
   };
 
-  useEffect(() => {
-    const fetchAllowanceAmount = async () => {
-      await getAllowanceAmount();
-    };
-
-    fetchAllowanceAmount();
-  }, [fundingAmount]);
-
-  useEffect(() => {
-    if (openModalAccept) {
-      scrollToSection(acceptRef);
-    }
-  }, [openModalAccept]);
-  useEffect(() => {
-    if (openModalDeny) {
-      scrollToSection(acceptRef);
-    }
-  }, [openModalDeny]);
-  useEffect(() => {
-    console.log("proposalDecisionMade:", proposalDecisionMade);
-  }, [proposalDecisionMade]);
-
-  useEffect(() => {
-    const fetchRefundAmount = async () => {
-      await getRefundAmount();
-    };
-
-    fetchRefundAmount();
-  }, []);
   return (
     <main className="flex w-lvw items-center flex-col">
       <GetBackButton />
@@ -252,8 +252,6 @@ export default function ProposalPageClient({
           </div>
         )}
 
-
-        
         <div className="flex justify-around flex-col sm:flex-row">
           {proposalData?.decisionStatus == 1 && (
             <div className="flex justify-between items-center mt-4 border border-2 border-violet-500 p-2 rounded-2xl">
@@ -328,7 +326,7 @@ export default function ProposalPageClient({
           )}
         </div>
       </div>
-      
+
       {proposalData?.decisionStatus == 0 && (
         <div className="w-11/12 min-w-96 sm:w-9/10 md:w-4/5 lg:w-4/5 max-w-7xl">
           {userAddress == proposalData?.toCompanyAddress && (
