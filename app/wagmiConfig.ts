@@ -29,8 +29,8 @@ const connectors = connectorsForWallets([
     groupName: "Popular",
     wallets: [
       metaMaskWallet({ chains, projectId }),
-      rainbowWallet({ chains, projectId }),
-      // zerionWallet({ chains, projectId }),
+      //rainbowWallet({ chains, projectId }),
+      zerionWallet({ chains, projectId }),
     ],
   },
   // {
