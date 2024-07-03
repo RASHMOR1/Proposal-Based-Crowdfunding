@@ -73,13 +73,12 @@ export const modifyHash = (hash: string) => {
 
 interface UpdateProposalData {
   proposalId: number;
-  newDecisionStatus?: number; // Optional field
-  newFundingGoal?: number; // Optional field
+  newDecisionStatus?: number;
+  newFundingGoal?: number;
   newDeadline?: number;
   newComment?: string;
   newCurrentFunding?: string;
   additionalFunding?: number;
-  // Optional field
 }
 
 export async function updateProposal(data: UpdateProposalData) {
