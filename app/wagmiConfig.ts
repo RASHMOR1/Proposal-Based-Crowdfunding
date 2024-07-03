@@ -28,19 +28,19 @@ const connectors = connectorsForWallets([
   {
     groupName: "Popular",
     wallets: [
-      //metaMaskWallet({ chains, projectId }),
+      metaMaskWallet({ chains, projectId }),
       rainbowWallet({ chains, projectId }),
 
       zerionWallet({ chains, projectId }),
     ],
   },
-  {
-    groupName: "Others",
-    wallets: [
-      trustWallet({ chains, projectId }),
-      ledgerWallet({ chains, projectId }),
-    ],
-  },
+  // {
+  //   groupName: "Others",
+  //   wallets: [
+  //     trustWallet({ chains, projectId }),
+  //     ledgerWallet({ chains, projectId }),
+  //   ],
+  // },
 ]);
 
 export const wagmiConfig = createConfig({
