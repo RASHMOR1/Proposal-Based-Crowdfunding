@@ -1,31 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
 import "../../globals.css";
-
-import MainContractAbi from "@/abi/abiFile.json";
-
 import { TransactionBox, GetBackButton } from "@/components";
 import {
   createProposalInteraction,
   approveMockUsdtInteraction,
+  getAllowanceInteraction,
 } from "@/app/blockchainInteractions";
-
-import {
-  getAccount,
-  readContract,
-  waitForTransaction,
-  prepareWriteContract,
-  writeContract,
-} from "@wagmi/core";
-import { mainContractAddress, mockUsdtAddress } from "@/constants/constants";
-
-import MockUsdtAbi from "@/abi/MockUsdtAbi.json";
+import { getAccount } from "@wagmi/core";
 
 function CreatePage() {
-  const [isCreateButtonClicked, setCreateButtonClicked] = useState(true);
-  const [isApproveButtonClicked, setIsApproveButtonClicked] = useState(true);
   const [uploadingIpfs, setUploadingIpfs] = useState(false);
   const [uploadingTransaction, setUploadingTransaction] = useState(false);
   const [disabledCreateProposal, setDisabledCreateProposal] = useState(false);
@@ -38,15 +23,10 @@ function CreatePage() {
 
   const account = getAccount();
   const userAddress = account.address;
-  console.log("account address is:", account.address);
 
   const getAllowanceAmount = async () => {
-    const data = await readContract({
-      address: mockUsdtAddress, // mock usdt contract
-      abi: MockUsdtAbi,
-      functionName: "allowance",
-      args: [userAddress, mainContractAddress],
-    });
+    const data = await getAllowanceInteraction(userAddress as `0x${string}`);
+
     console.log("this is fetched data:", data);
     const dataNumber = Number(data) / (10 * 10 ** 14);
     console.log("this is the allowance amount:", dataNumber);
@@ -58,17 +38,7 @@ function CreatePage() {
 
   const approveMockUsdt = async () => {
     setUploadingTransaction(true);
-    // const { request: prepareConfig } = await prepareWriteContract({
-    //   address: mockUsdtAddress, // mock usdt contract
-    //   abi: MockUsdtAbi,
-    //   functionName: "approve",
-    //   args: [mainContractAddress, 10 * 10 ** 18],
-    // });
-    // const { hash: approveHash } = await writeContract(prepareConfig);
-    // const data = await waitForTransaction({
-    //   hash: approveHash,
-    //   //timeout: 20_000,
-    // });
+
     const data = await approveMockUsdtInteraction(10);
     setIsAllowanceEnough(true);
     setUploadingTransaction(false);
@@ -81,19 +51,6 @@ function CreatePage() {
 
     const data = await createProposalInteraction(ipfsHash, form.address);
 
-    // const { request: prepareConfig } = await prepareWriteContract({
-    //   address: mainContractAddress,
-    //   abi: MainContractAbi,
-    //   args: [form.address, ipfsHash],
-    //   functionName: "createProposal",
-    // });
-    // const { hash } = await writeContract(prepareConfig);
-
-    // const data = await waitForTransaction({
-    //   confirmations: 1,
-    //   hash,
-    //   timeout: 120_000,
-    // });
     setIsAllowanceEnough(false);
     setUploadingTransaction(false);
     setTransactionHash(String(data?.transactionHash));
@@ -143,8 +100,6 @@ function CreatePage() {
       setIpfsHash(resData.IpfsHash);
       console.log("added ipfs hash:", resData.IpfsHash);
       console.log("this is ipfsHash in state:", ipfsHash);
-
-      setCreateButtonClicked(false);
     } catch (error) {
       console.log("Error uploading file:", error);
       alert("Trouble uploading file");
